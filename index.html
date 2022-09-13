@@ -1,56 +1,58 @@
-<head>
-    <meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta
-                name="viewport" content="width=device-width, initial-scale=1.0">
-                <!-- <script src="main.js"></script> -->
-                <title>Square View</title>
-                <style>
-                    body {
-                        /* background-color: #a1d2ff;*/
-                        background-color: #020d1c;
-                    }
-                    #container {
-                        display: flex;
-                        /*  flex-flow: wrap;*/
-                        flex-direction: column-reverse;
-                        align-items: flex-start;
-                        margin-left: 8px;
-                    }
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <script src="main.js"></script> -->
+        <title>Square View</title>
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+        <style>
+            body {
+                /* background-color: #a1d2ff;*/
+                background-color: #020d1c;
+            }
+            #container {
+                display: flex;
+                /*  flex-flow: wrap;*/
+                flex-direction: column-reverse;
+                align-items: flex-start;
+                margin-left: 8px;
+            }
 
-                    .egroup {
-                        width: auto;
-                        height: 18px;
-                        margin: 1px;
-                        background-color: green;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                    }
-                    .etext {
-                        color: rgba(255, 255, 255, 0.904);
-                        padding: 0;
-                        font-size: 20px;
-                        font-family: sans-serif;
-                        font-weight: lighter;
-                    }
-                    .ogroup {
-                        width: auto;
-                        height: 18px;
-                        margin: 1px;
-                        background-color: red;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                    }
-                    .otext {
-                        color: rgba(255, 255, 255, 0.87);
-                        padding: 0;
-                        font-size: 20px;
-                        font-family: sans-serif;
-                        font-weight: lighter;
-                    }
-                    /* .mainContainer {
+            .egroup {
+                width: auto;
+                height: 18px;
+                margin: 1px;
+                background-color: green;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .etext {
+                color: rgba(255, 255, 255, 0.904);
+                padding: 0;
+                font-size: 20px;
+                font-family: sans-serif;
+                font-weight: lighter;
+            }
+            .ogroup {
+                width: auto;
+                height: 18px;
+                margin: 1px;
+                background-color: red;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .otext {
+                color: rgba(255, 255, 255, 0.87);
+                padding: 0;
+                font-size: 20px;
+                font-family: sans-serif;
+                font-weight: lighter;
+            }
+            /* .mainContainer {
                         display: flex;
                         flex-direction: row;
 
@@ -61,165 +63,168 @@
                         height: 100%;
                         position:absolute;
                     } */
-                </style>
+        </style>
 
-            </head>
+    </head>
 
-            <body>
-                <!-- <div class="mainContainer">
-                    <div class="linea"></div>
-                   
-                </div> -->
- <div id="container"></div>
+    <body>
+        <!-- <div class="mainContainer">
+                            <div class="linea"></div>
+                           
+                        </div> -->
+        <div id="container"></div>
 
-                <!-- structura interna -->
-                <!-- <div class="egroup">
-                                        <span class="etext"></span>
-                                    </div>
-                                    <div class="ogroup">
-                                        <span class="otext"></span>
-                                    </div> -->
+        <!-- structura interna -->
+        <!-- <div class="egroup">
+                                                <span class="etext"></span>
+                                            </div>
+                                            <div class="ogroup">
+                                                <span class="otext"></span>
+                                            </div> -->
 
-                <script>
+        <script>
 
-                    var out = document.body;
-                    // ==============================================================
+            var out = document.body;
+            // ==============================================================
 
-                    // var arr1 = [];
-                    // var arr2 = [];
-                    // arr2[0] = 0;
-                    // var listC = [];
-                    var porcentList = [];
-                    periods = 25;
+            // var arr1 = [];
+            // var arr2 = [];
+            // arr2[0] = 0;
+            // var listC = [];
+            var porcentList = [];
+            periods = 25;
 
-                    var eCounter = 0;
-                    var oCounter = 0;
-
-
-                    var symbol = "R_50";
-                    var decimals = 4;
+            var eCounter = 0;
+            var oCounter = 0;
 
 
-                    var ws = new WebSocket('wss://ws.binaryws.com/websockets/v3?app_id=1089');
-
-                    ws.onopen = function (evt) {
-                        ws.send(JSON.stringify({ticks: symbol}));
-                    };
-
-                    var addOGroup = false;
-                    var addEGroup = false;
-
-                    ws.onmessage = function (msg) {
-                        var data = JSON.parse(msg.data);
-
-                        var digit = Number(data.tick.quote).toFixed(decimals).slice(-1);
+            var symbol = "R_50";
+            var decimals = 4;
 
 
-                        if (digit % 2 === 0) {
-                            var text = "O";
-                            if (oCounter > 0) { // arr1.push(oCounter + text);
-                                AñadirGruposE(digit, 1);
-                                addEGroup = true
+            var ws = new WebSocket('wss://ws.binaryws.com/websockets/v3?app_id=1089');
 
-                            }
-                            oCounter = 0;
-                            eCounter += 1;
+            ws.onopen = function (evt) {
+                ws.send(JSON.stringify({ticks: symbol}));
+            };
 
-                        } else {
-                            var text = "E";
-                            if (eCounter > 0) { // arr1.push(eCounter + text);
-                                AñadirGruposO(digit, 1);
-                                addOGroup = true;
+            var addOGroup = false;
+            var addEGroup = false;
 
-                            }
-                            eCounter = 0;
-                            oCounter += 1;
-                        }
-                        if (eCounter > 0) {
-                            // var text = "E";
-                            // arr2[0] = eCounter + text;
-                            if (addEGroup) {
-                                addEGroup = false;
-                            } else {
-                                AñadirDigitsE(digit, eCounter);
+            ws.onmessage = function (msg) {
+                var data = JSON.parse(msg.data);
 
-                            }
-
-                            // console.log("Ecounter mayor a cero");
-                        }
-                        if (oCounter > 0) {
-                            // var text = "O";
-                            // arr2[0] = oCounter + text;
-                            if (addOGroup) {
-                                addOGroup = false;
-                            } else {
-                                AñadirDigitsO(digit, oCounter,);
-
-                            }
-
-                            // console.log("Ocounter mayor a cero");
-                        }
-                        // mostrar en lista este array
-                        // listC = arr1 + "," + arr2;
-                        // console.log("Groups: " + listC);
-                        // var digitListView = document.getElementById("digitGroups");
+                var digit = Number(data.tick.quote).toFixed(decimals).slice(-1);
 
 
-                        // TODO:  your script goes here
-                        // colors text 🟢🔵🔴
-
-                        function AñadirGruposE(digito, Ec) {
-                            var edigitText = document.createTextNode(digito);
-                            var eGroup = document.createElement("div");
-                            var Etext = document.createElement("span");
-                            Etext.setAttribute("class", "etext");
-                            Etext.appendChild(edigitText);
-
-                            eGroup.setAttribute('class', 'egroup');
-                            eGroup.appendChild(Etext);
-
-                            var container = document.getElementById("container");
-                            container.appendChild(eGroup);
-
-
-                        }
-
-                        function AñadirDigitsE(digito, Ec) {
-
-                            var edigitText = document.createTextNode(digito);
-                            var counterItem = document.getElementsByClassName("etext");
-                            counterItem[counterItem.length - 1].appendChild(edigitText);
-
-
-                        }
-
-                        function AñadirGruposO(digito, Oc,) {
-                            var odigitText = document.createTextNode(digito);
-
-                            var Otext = document.createElement("span");
-                            Otext.setAttribute("class", "otext");
-                            Otext.appendChild(odigitText);
-
-                            var oGroup = document.createElement("div");
-                            oGroup.setAttribute('class', 'ogroup');
-                            oGroup.appendChild(Otext);
-
-                            var container = document.getElementById("container");
-                            container.appendChild(oGroup);
-
-                        }
-
-                        function AñadirDigitsO(digito, Oc) {
-
-                            var odigitText = document.createTextNode(digito);
-
-                            var counterItem = document.getElementsByClassName("otext");
-                            counterItem[counterItem.length - 1].appendChild(odigitText);
-
-                        }
-
+                if (digit % 2 === 0) {
+                    var text = "O";
+                    if (oCounter > 0) { // arr1.push(oCounter + text);
+                        AñadirGruposE(digit, 1);
+                        addEGroup = true
 
                     }
-                </script>
+                    oCounter = 0;
+                    eCounter += 1;
 
-            </body>
+                } else {
+                    var text = "E";
+                    if (eCounter > 0) { // arr1.push(eCounter + text);
+                        AñadirGruposO(digit, 1);
+                        addOGroup = true;
+
+                    }
+                    eCounter = 0;
+                    oCounter += 1;
+                }
+                if (eCounter > 0) {
+                    // var text = "E";
+                    // arr2[0] = eCounter + text;
+                    if (addEGroup) {
+                        addEGroup = false;
+                    } else {
+                        AñadirDigitsE(digit, eCounter);
+
+                    }
+
+                    // console.log("Ecounter mayor a cero");
+                }
+                if (oCounter > 0) {
+                    // var text = "O";
+                    // arr2[0] = oCounter + text;
+                    if (addOGroup) {
+                        addOGroup = false;
+                    } else {
+                        AñadirDigitsO(digit, oCounter,);
+
+                    }
+
+                    // console.log("Ocounter mayor a cero");
+                }
+                // mostrar en lista este array
+                // listC = arr1 + "," + arr2;
+                // console.log("Groups: " + listC);
+                // var digitListView = document.getElementById("digitGroups");
+
+
+                // TODO:  your script goes here
+                // colors text 🟢🔵🔴
+
+                function AñadirGruposE(digito, Ec) {
+                    var edigitText = document.createTextNode(digito);
+                    var eGroup = document.createElement("div");
+                    var Etext = document.createElement("span");
+                    Etext.setAttribute("class", "etext");
+                    Etext.appendChild(edigitText);
+
+                    eGroup.setAttribute('class', 'egroup');
+                    eGroup.appendChild(Etext);
+
+                    var container = document.getElementById("container");
+                    container.appendChild(eGroup);
+
+
+                }
+
+                function AñadirDigitsE(digito, Ec) {
+
+                    var edigitText = document.createTextNode(digito);
+                    var counterItem = document.getElementsByClassName("etext");
+                    counterItem[counterItem.length - 1].appendChild(edigitText);
+
+
+                }
+
+                function AñadirGruposO(digito, Oc,) {
+                    var odigitText = document.createTextNode(digito);
+
+                    var Otext = document.createElement("span");
+                    Otext.setAttribute("class", "otext");
+                    Otext.appendChild(odigitText);
+
+                    var oGroup = document.createElement("div");
+                    oGroup.setAttribute('class', 'ogroup');
+                    oGroup.appendChild(Otext);
+
+                    var container = document.getElementById("container");
+                    container.appendChild(oGroup);
+
+                }
+
+                function AñadirDigitsO(digito, Oc) {
+
+                    var odigitText = document.createTextNode(digito);
+
+                    var counterItem = document.getElementsByClassName("otext");
+                    counterItem[counterItem.length - 1].appendChild(odigitText);
+
+                }
+
+
+            }
+        </script>
+
+    </body>
+
+
+</html>
