@@ -3,19 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta
+        name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- <script src="main.js"></script> -->
-        <title>Square View</title>
+        <title>Test</title>
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
         <style>
             body {
                 /* background-color: #a1d2ff;*/
                 background-color: #020d1c;
-                overflow: hidden;
-            }
-            body:hover{
-                overflow-y: scroll;
-                overflow-x: hidden;
             }
             #container {
                 display: flex;
@@ -74,31 +70,22 @@
 
     <body>
         <!-- <div class="mainContainer">
-                            <div class="linea"></div>
-                           
-                        </div> -->
+                                    <div class="linea"></div>
+                                   
+                                </div> -->
         <div id="container"></div>
 
         <!-- structura interna -->
         <!-- <div class="egroup">
-                                                <span class="etext"></span>
-                                            </div>
-                                            <div class="ogroup">
-                                                <span class="otext"></span>
-                                            </div> -->
+                                                        <span class="etext"></span>
+                                                    </div>
+                                                    <div class="ogroup">
+                                                        <span class="otext"></span>
+                                                    </div> -->
 
         <script>
 
-            var out = document.body;
-            // ==============================================================
-
-            // var arr1 = [];
-            // var arr2 = [];
-            // arr2[0] = 0;
-            // var listC = [];
-            var porcentList = [];
-            periods = 25;
-
+            
             var eCounter = 0;
             var oCounter = 0;
 
@@ -116,68 +103,83 @@
             var addOGroup = false;
             var addEGroup = false;
 
+            var un = false;
             ws.onmessage = function (msg) {
-                var data = JSON.parse(msg.data);
+                var datas = JSON.parse(msg.data);
 
-                var digit = Number(data.tick.quote).toFixed(decimals).slice(-1);
+              //  var digit = Number(datas.tick.quote).toFixed(decimals).slice(-1);
+if (un) {
+     var digit = Number(datas.tick.quote);
 
+                console.log(digit);
+                un = true;
+}else{
+    var digit = Number(datas.tick.quote);
 
+console.log(digit);
+un = false;
+}
+
+               
+
+/*
                 if (digit % 2 === 0) {
                     var text = "O";
-                    if (oCounter > 0) { // arr1.push(oCounter + text);
+                    if (oCounter > 0) { 
+                        arr1.push(oCounter + text);
                         AñadirGruposE(digit, 1);
                         addEGroup = true
-                     //   console.log("hola add Group E"+ addEGroup);
+                    
 
-                    }
-                    oCounter = 0;
+                    }oCounter = 0;
                     eCounter += 1;
 
                 } else {
                     var text = "E";
-                    if (eCounter > 0) { // arr1.push(eCounter + text);
+                    if (eCounter > 0) {
+                        arr1.push(eCounter + text);
                         AñadirGruposO(digit, 1);
                         addOGroup = true;
-                     //   console.log("hola add Group O"+ addOGroup);
-                    }
-                    eCounter = 0;
+                        
+                    }eCounter = 0;
                     oCounter += 1;
                 }
                 if (eCounter > 0) {
-                    // var text = "E";
-                    // arr2[0] = eCounter + text;
+                    var text = "E";
+                    arr2[0] = eCounter + text;
                     if (addEGroup) {
                         addEGroup = false;
                     } else {
-                      
+
                         AñadirDigitsE(digit, eCounter);
-//console.log("hola add digits E"+ addEGroup);
+                       
                     }
 
-                    // console.log("Ecounter mayor a cero");
+                    
                 }
                 if (oCounter > 0) {
-                    // var text = "O";
-                    // arr2[0] = oCounter + text;
+                    var text = "O";
+                    arr2[0] = oCounter + text;
                     if (addOGroup) {
                         addOGroup = false;
                     } else {
-                         
+
                         AñadirDigitsO(digit, oCounter,);
-                      //  console.log("hola add digits O"+ addOGroup);
+                      
                     }
 
-                    // console.log("Ocounter mayor a cero");
+                    
                 }
+                */
                 // mostrar en lista este array
-                // listC = arr1 + "," + arr2;
-                // console.log("Groups: " + listC);
+              //  listC = arr1 + "," + arr2;
+              ///  console.log("Groups: " + listC);
                 // var digitListView = document.getElementById("digitGroups");
 
 
                 // TODO:  your script goes here
                 // colors text 🟢🔵🔴
-
+            }
                 function AñadirGruposE(digito, Ec) {
                     var edigitText = document.createTextNode(digito);
                     var eGroup = document.createElement("div");
@@ -229,7 +231,7 @@
                 }
 
 
-            }
+            
         </script>
 
     </body>
